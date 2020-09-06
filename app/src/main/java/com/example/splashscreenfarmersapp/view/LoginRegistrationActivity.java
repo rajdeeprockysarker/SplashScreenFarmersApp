@@ -47,6 +47,15 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void LoadVirifyOTPFragment(){
+
+        SignupOTPFragment newFragment = new SignupOTPFragment();
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fram_loginregistation, newFragment);
+
+        transaction.commit();
+    }
+
 
     public void replacFragment(int flag){
 
@@ -59,6 +68,9 @@ public class LoginRegistrationActivity extends AppCompatActivity {
                 break;
             case 2:
                 LoadForgetPasswordFragment();
+                break;
+            case 3:
+                LoadVirifyOTPFragment();
                 break;
         }
 
@@ -73,6 +85,10 @@ public class LoginRegistrationActivity extends AppCompatActivity {
             return;
         }
         else if(fragment instanceof ForgetPasswordFragment){
+            replacFragment(0);
+            return;
+        }
+        else if(fragment instanceof SignupOTPFragment){
             replacFragment(0);
             return;
         }
