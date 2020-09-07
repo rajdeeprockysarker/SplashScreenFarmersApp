@@ -1,9 +1,14 @@
 package com.example.splashscreenfarmersapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -12,24 +17,35 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.splashscreenfarmersapp.view.LoginRegistrationActivity;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
 
+    String[] permissions = new String[] {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    public static final int MULTIPLE_PERMISSIONS = 10; // code you want.
+    RadioGroup radioGroup;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        final Button next;
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
+        radioGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
         next=(Button)findViewById(R.id.next);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -60,13 +76,23 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+
+        if (checkPermissions()){
+            // permissions granted.
+            openLogin();
+        } else {
+            // show dialog informing them that we lack certain permissions
+        }
+
+
+    }
+
+    public void openLogin(){
         if( CustomeShreadPreferance.getDefaultLanguage(getApplicationContext()).length()>0){
             radioGroup.setVisibility(View.GONE);
             next.setVisibility(View.GONE);
             new splashTime().execute();
         }
-
-
     }
 
 
@@ -111,5 +137,41 @@ public class SplashActivity extends AppCompatActivity {
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
     }
+
+
+
+    private boolean checkPermissions() {
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p:permissions) {
+            result = ContextCompat.checkSelfPermission(this,p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MULTIPLE_PERMISSIONS:{
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // permissions granted.
+                    openLogin();
+                } else {
+                    // no permissions granted.
+                    openLogin();
+                }
+                return;
+            }
+        }
+    }
+
 
 }
