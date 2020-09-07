@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.splashscreenfarmersapp.R;
+import com.example.splashscreenfarmersapp.viewmodel.LoginLiveData;
 import com.example.splashscreenfarmersapp.viewmodel.SignupLiveData;
 
 public class SignupFragment extends Fragment {
@@ -29,7 +30,7 @@ public class SignupFragment extends Fragment {
     Button btn_reciveotp;
     ImageView btn_signup_back;
     ProgressDialog dialog ;
-    private SignupLiveData mSignupLiveData;
+    private LoginLiveData mLoginLiveData;
 
 
     @Override
@@ -55,19 +56,36 @@ public class SignupFragment extends Fragment {
 
         dialog.dismiss();
 
-        mSignupLiveData=new ViewModelProvider(getActivity()).get(SignupLiveData.class);
+        mLoginLiveData=new ViewModelProvider(getActivity()).get(LoginLiveData.class);
 
-        mSignupLiveData.userList.observe(this, new Observer() {
+        mLoginLiveData.registrationCheckForMobile.observe(this, new Observer() {
             @Override
             public void onChanged(Object o) {
                 Log.v("",""+((MutableLiveData) o).getValue());
-                if((Integer)((MutableLiveData) o).getValue()==10) {
-                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+
+                if((Integer) ((MutableLiveData) o).getValue()==0){
+                    mLoginLiveData.initiateRegistrationForUser(1);
                 }
-                else
-                {
-                    Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+                else{
+                    if((Integer) ((MutableLiveData) o).getValue()==1)
+                        Toast.makeText(getContext(), "User exists", Toast.LENGTH_LONG).show();
+                    if((Integer) ((MutableLiveData) o).getValue()==2)
+                        Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
+
                 }
+            }
+        });
+        mLoginLiveData.registrationCheck.observe(this, new Observer() {
+            @Override
+            public void onChanged(Object o) {
+                Log.v("",""+((MutableLiveData) o).getValue());
+//                if((Integer)((MutableLiveData) o).getValue()==10) {
+//                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+//                }
+//                else
+//                {
+//                    Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+//                }
                 dialog.dismiss();
             }
         });
@@ -122,7 +140,7 @@ public class SignupFragment extends Fragment {
         }
 
         dialog.show();
-        mSignupLiveData.setUserIdForEditUser(6);
+        mLoginLiveData.setUserIdForEditUserAgainstMobileNo(6);
 
     }
 }

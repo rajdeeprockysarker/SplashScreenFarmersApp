@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.splashscreenfarmersapp.GetLocationClass;
 import com.example.splashscreenfarmersapp.R;
 import com.example.splashscreenfarmersapp.viewmodel.LoginLiveData;
+import com.example.splashscreenfarmersapp.viewmodel.SignupLiveData;
 
 
 public class LoginFragment extends Fragment {
@@ -32,7 +33,7 @@ public class LoginFragment extends Fragment {
     EditText edt_username, edt_password;
 
 
-    private LoginLiveData mLoginLiveData;
+    private SignupLiveData mLoginLiveData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,39 +57,40 @@ public class LoginFragment extends Fragment {
         edt_username = (EditText) getActivity().findViewById(R.id.edt_username);
         edt_password = (EditText) getActivity().findViewById(R.id.edt_password);
 
-        mLoginLiveData = new ViewModelProvider(getActivity()).get(LoginLiveData.class);
+        mLoginLiveData = new ViewModelProvider(getActivity()).get(SignupLiveData.class);
         dialog = ProgressDialog.show(getActivity(), getResources().getString(
                 R.string.loading
         ), getResources().getString(R.string.please_wait), true);
 
         dialog.dismiss();
-        mLoginLiveData.registrationCheckForMobile.observe(this, new Observer() {
+        mLoginLiveData.userList.observe(this, new Observer() {
             @Override
             public void onChanged(Object o) {
                 Log.v("", "" + ((MutableLiveData) o).getValue());
 
 
-                if((Integer) ((MutableLiveData) o).getValue()==0){
-                    mLoginLiveData.initiateRegistrationForUser(1);
-                }
-                else{
-                    if((Integer) ((MutableLiveData) o).getValue()==1)
-                        Toast.makeText(getContext(), "User exists", Toast.LENGTH_LONG).show();
-                    if((Integer) ((MutableLiveData) o).getValue()==2)
-                        Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        });
-
-        mLoginLiveData.registrationCheck.observe(this, new Observer() {
-            @Override
-            public void onChanged(Object o) {
+//                if((Integer) ((MutableLiveData) o).getValue()==0){
+//                    mLoginLiveData.initiateRegistrationForUser(1);
+//                }
+//                else{
+//                    if((Integer) ((MutableLiveData) o).getValue()==1)
+//                        Toast.makeText(getContext(), "User exists", Toast.LENGTH_LONG).show();
+//                    if((Integer) ((MutableLiveData) o).getValue()==2)
+//                        Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
+//
+//                }
                 dialog.dismiss();
-                Log.v("", "" + ((MutableLiveData) o).getValue());
+
             }
         });
+
+//        mLoginLiveData.registrationCheck.observe(this, new Observer() {
+//            @Override
+//            public void onChanged(Object o) {
+//                dialog.dismiss();
+//                Log.v("", "" + ((MutableLiveData) o).getValue());
+//            }
+//        });
 
         txt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +119,7 @@ public class LoginFragment extends Fragment {
         if (edt_username.getText().toString().trim().length() > 0 &&
                 edt_password.getText().toString().trim().length() > 0) {
             dialog.show();
-            mLoginLiveData.setUserIdForEditUserAgainstMobileNo(10);
+            mLoginLiveData.setUserIdForEditUser(10);
         }
         if (edt_username.getText().toString().trim().isEmpty()) {
             edt_username.setError("Please insert your username");
