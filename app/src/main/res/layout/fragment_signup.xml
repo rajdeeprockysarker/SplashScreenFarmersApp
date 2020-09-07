@@ -66,6 +66,17 @@
                 android:text="@string/mobile_no">
 
             </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="+91"
+                    android:gravity="center"
+                    />
 
             <EditText
                 android:id="@+id/edt_mobileno"
@@ -74,6 +85,7 @@
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

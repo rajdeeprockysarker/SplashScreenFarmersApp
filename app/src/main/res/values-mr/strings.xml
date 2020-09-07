@@ -22,5 +22,9 @@
     <string name="forget_password">संकेतशब्द विसरलात?</string>
     <string name="create_account">नवीन खाते तयार करा</string>
     <string name="signup">साइन अप</string>
+    <string name="please_wait">कृपया थांबा ...</string>
+    <string name="loading">लोड करीत आहे</string>
+
+
 
 </resources>
