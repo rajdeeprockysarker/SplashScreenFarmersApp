@@ -12,6 +12,8 @@
     <string name="full_name">पूर्ण नाव</string>
     <string name="mobile_no">मोबाईल क्रमांक</string>
     <string name="password">संकेतशब्द</string>
+    <string name="recive_otp">ओटीपी प्राप्त करा</string>
+
     <string name="confirm_password">पासवर्डची पुष्टी करा</string>
     <string name="username">वापरकर्तानाव</string>
 

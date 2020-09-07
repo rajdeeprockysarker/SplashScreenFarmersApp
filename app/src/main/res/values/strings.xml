@@ -12,8 +12,8 @@
     <string name="mobile_no">Mobile No</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="recive_otp">Recive OTP</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <string name="wellcome_login">welcome to unique platform created to empower farmers in india</string>
