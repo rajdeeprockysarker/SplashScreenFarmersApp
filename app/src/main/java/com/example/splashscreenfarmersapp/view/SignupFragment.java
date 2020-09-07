@@ -64,7 +64,9 @@ public class SignupFragment extends Fragment {
                 Log.v("",""+((MutableLiveData) o).getValue());
 
                 if((Integer) ((MutableLiveData) o).getValue()==0){
-                    mLoginLiveData.initiateRegistrationForUser(1);
+                   // mLoginLiveData.initiateRegistrationForUser(1);
+                    ((LoginRegistrationActivity) getActivity()).replacFragment(3);
+                    dialog.dismiss();
                 }
                 else{
                     if((Integer) ((MutableLiveData) o).getValue()==1)
@@ -73,22 +75,23 @@ public class SignupFragment extends Fragment {
                         Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
 
                 }
-            }
-        });
-        mLoginLiveData.registrationCheck.observe(this, new Observer() {
-            @Override
-            public void onChanged(Object o) {
-                Log.v("",""+((MutableLiveData) o).getValue());
-//                if((Integer)((MutableLiveData) o).getValue()==10) {
-//                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
-//                }
-//                else
-//                {
-//                    Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
-//                }
                 dialog.dismiss();
             }
         });
+//        mLoginLiveData.registrationCheck.observe(this, new Observer() {
+//            @Override
+//            public void onChanged(Object o) {
+//                Log.v("",""+((MutableLiveData) o).getValue());
+////                if((Integer)((MutableLiveData) o).getValue()==10) {
+////                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+////                }
+////                else
+////                {
+////                    Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+////                }
+//                dialog.dismiss();
+//            }
+//        });
 
 
 
@@ -135,9 +138,9 @@ public class SignupFragment extends Fragment {
             flag = false;
         }
 
-        if (flag) {
-            ((LoginRegistrationActivity) getActivity()).replacFragment(3);
-        }
+//        if (flag) {
+//            ((LoginRegistrationActivity) getActivity()).replacFragment(3);
+//        }
 
         dialog.show();
         mLoginLiveData.setUserIdForEditUserAgainstMobileNo(6);
