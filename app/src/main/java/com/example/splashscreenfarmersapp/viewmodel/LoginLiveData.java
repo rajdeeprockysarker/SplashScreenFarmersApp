@@ -11,7 +11,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.example.splashscreenfarmersapp.model.User;
 import com.example.splashscreenfarmersapp.retrofit.POSTCardService;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -21,12 +24,21 @@ import retrofit2.Response;
 public class LoginLiveData extends AndroidViewModel {
 
 
-    private MutableLiveData<Integer> userId = new MutableLiveData<>();
-    public LiveData userList = Transformations.map(userId, new Function() {
+    private MutableLiveData<Integer> checkMobileNoFirstRegistration = new MutableLiveData<>();
+    private MutableLiveData<Integer> initiateRegistration = new MutableLiveData<>();
+    public LiveData registrationCheckForMobile = Transformations.map(checkMobileNoFirstRegistration, new Function() {
         @Override
         public Object apply(Object user) {
 
-            return userId;
+            return checkMobileNoFirstRegistration;
+        }
+    });
+
+    public LiveData registrationCheck = Transformations.map(initiateRegistration, new Function() {
+        @Override
+        public Object apply(Object user) {
+
+            return initiateRegistration;
         }
     });
 
@@ -34,18 +46,73 @@ public class LoginLiveData extends AndroidViewModel {
         super(application);
     }
 
-    public void setUserIdForEditUser(int id) {
+    public void setUserIdForEditUserAgainstMobileNo(int id) {
 
-        if (userId == null) {
-            userId = new MutableLiveData<>();
+        if (checkMobileNoFirstRegistration == null) {
+            checkMobileNoFirstRegistration = new MutableLiveData<>();
         }
-        new SignupConnection().execute();
+        new SignupMobileNoCheck().execute();
+
+
+    }
+
+    public void initiateRegistrationForUser(int id) {
+
+        if (initiateRegistration == null) {
+            initiateRegistration = new MutableLiveData<>();
+        }
+
+        new Signup().execute();
 
 
     }
 
 
-    public class SignupConnection extends AsyncTask<Void, Void, Void> {
+    public class SignupMobileNoCheck extends AsyncTask<Void, Void, Void> {
+        POSTCardService postCardService;
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(2000);
+
+                if (this.postCardService == null) {
+                    this.postCardService = new POSTCardService();
+                }
+
+                postCardService
+                        .getAPI()
+                        .checkMobileNo("987654321")
+                        .enqueue(new Callback<List<User>>() {
+                            @Override
+                            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                                Log.v("post","Val");
+                              if(response.body().size()>0){
+                                  checkMobileNoFirstRegistration.postValue(1);
+                              }
+                              if(response.body().size()==0){
+                                  checkMobileNoFirstRegistration.postValue(0);
+                              }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<User>> call, Throwable t) {
+                                Log.v("post","Val");
+                                checkMobileNoFirstRegistration.postValue(2);
+                            }
+                        });
+
+                Log.v("","");
+
+
+            }
+            catch (Exception e){
+
+            }
+
+            return null;
+        }
+    }
+    public class Signup extends AsyncTask<Void, Void, Void> {
         POSTCardService postCardService;
         @Override
         protected Void doInBackground(Void... voids) {
@@ -63,15 +130,17 @@ public class LoginLiveData extends AndroidViewModel {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 Log.v("post","Val");
-                                userId.postValue(10);
+                                initiateRegistration.postValue(0);
                             }
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
                                 Log.v("post","Val");
-                                userId.postValue(9);
+                                initiateRegistration.postValue(1);
                             }
                         });
+
+                Log.v("","");
 
 
             }
@@ -82,6 +151,5 @@ public class LoginLiveData extends AndroidViewModel {
             return null;
         }
     }
-
 
 }

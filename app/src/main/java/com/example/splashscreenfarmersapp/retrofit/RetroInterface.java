@@ -1,5 +1,9 @@
 package com.example.splashscreenfarmersapp.retrofit;
 
+import com.example.splashscreenfarmersapp.model.User;
+
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -19,6 +23,13 @@ public interface RetroInterface {
     @POST("/Post.php")
     Call<ResponseBody> createuser(
             @Field("price") String price
+
+    );
+
+    @FormUrlEncoded
+    @POST("/PostRegistration.php")
+    Call<List<User>> checkMobileNo(
+            @Field("mobile_no") String mobile_no
 
     );
 }
