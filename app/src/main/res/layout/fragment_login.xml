@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -28,8 +28,8 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_back_button" />
+            android:src="@drawable/ic_back_button"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -43,11 +43,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="10dp">
+            android:gravity="center"
+            android:layout_marginTop="50dp">
 
             <ImageView
+                android:src="@drawable/ic_launcher_foreground"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp" />
         </LinearLayout>
 
 
@@ -60,22 +62,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/app_name" />
+                android:text="@string/wellcome_login" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                app:startIconDrawable="@drawable/ic_avatar"
+                android:layout_height="wrap_content">
 
-            <EditText
+                <EditText
+                    android:id="@+id/edt_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="@string/username" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                app:startIconDrawable="@drawable/ic_lock"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:hint="@string/password" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -91,6 +111,7 @@
                 android:text="@string/i_accept" />
 
             <TextView
+                android:paddingLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/privacy_policy" />
@@ -122,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Forget Password ?" />
+                android:text="@string/forget_password" />
         </LinearLayout>
 
 
@@ -142,14 +163,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Create a new account" />
+                    android:text="@string/create_account" />
 
                 <TextView
+                    android:paddingLeft="20dp"
+                    android:id="@+id/txt_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/txt_signup"
-                    android:text="     Signup" />
+                    android:text="@string/signup" />
             </LinearLayout>
         </LinearLayout>
 

@@ -4,6 +4,7 @@
 
     <string name="next">पुढे</string>
 
+    <string name="wellcome_login">भारतातील शेतक emp्यांना सक्षम बनविण्यासाठी तयार केलेल्या अनन्य व्यासपीठावर आपले स्वागत आहे</string>
     <string name="login">लॉगिन</string>
     <string name="privacy_policy">गोपनीयता धोरण</string>
     <string name="i_accept">मला मान्य आहे</string>
@@ -12,5 +13,12 @@
     <string name="mobile_no">मोबाईल क्रमांक</string>
     <string name="password">संकेतशब्द</string>
     <string name="confirm_password">पासवर्डची पुष्टी करा</string>
+    <string name="username">वापरकर्तानाव</string>
+
+
+
+    <string name="forget_password">संकेतशब्द विसरलात?</string>
+    <string name="create_account">नवीन खाते तयार करा</string>
+    <string name="signup">साइन अप</string>
 
 </resources>
