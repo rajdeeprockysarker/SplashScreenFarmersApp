@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.splashscreenfarmersapp.view.LoginRegistrationActivity;
 import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,35 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+        if( CustomeShreadPreferance.getDefaultLanguage(getApplicationContext()).length()>0){
+            radioGroup.setVisibility(View.GONE);
+            next.setVisibility(View.GONE);
+            new splashTime().execute();
+        }
+
 
     }
 
+
+    class splashTime extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Intent inti=new Intent(SplashActivity.this, LoginRegistrationActivity.class);
+            startActivity(inti);
+            finish();
+        }
+    }
 
 
 
@@ -73,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
 
-
+        CustomeShreadPreferance.saveDefaultLanguage(getApplicationContext(),localeName);
     }
 
     public static void setLocaleEn (Context context){

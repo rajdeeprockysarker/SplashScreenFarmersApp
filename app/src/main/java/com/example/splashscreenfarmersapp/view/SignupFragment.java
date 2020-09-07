@@ -6,15 +6,21 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.splashscreenfarmersapp.R;
+import com.example.splashscreenfarmersapp.viewmodel.SignupLiveData;
 
 public class SignupFragment extends Fragment {
 
@@ -22,7 +28,8 @@ public class SignupFragment extends Fragment {
     EditText edt_full_name, edt_mobileno, edt_password, edt_confirm_password;
     Button btn_reciveotp;
     ImageView btn_signup_back;
-    ProgressDialog dialog;
+    ProgressDialog dialog ;
+    private SignupLiveData mSignupLiveData;
 
 
     @Override
@@ -45,6 +52,28 @@ public class SignupFragment extends Fragment {
         dialog = ProgressDialog.show(getActivity(), getResources().getString(
                 R.string.loading
         ), getResources().getString(R.string.please_wait), true);
+
+        dialog.dismiss();
+
+        mSignupLiveData=new ViewModelProvider(getActivity()).get(SignupLiveData.class);
+
+        mSignupLiveData.userList.observe(this, new Observer() {
+            @Override
+            public void onChanged(Object o) {
+                Log.v("",""+((MutableLiveData) o).getValue());
+                if((Integer)((MutableLiveData) o).getValue()==10) {
+                    Toast.makeText(getContext(), "Success", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+                }
+                dialog.dismiss();
+            }
+        });
+
+
+
 
         btn_signup_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +121,8 @@ public class SignupFragment extends Fragment {
             ((LoginRegistrationActivity) getActivity()).replacFragment(3);
         }
 
+        dialog.show();
+        mSignupLiveData.setUserIdForEditUser(6);
 
     }
 }
