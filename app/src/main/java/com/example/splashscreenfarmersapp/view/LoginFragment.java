@@ -1,9 +1,15 @@
 package com.example.splashscreenfarmersapp.view;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -18,10 +24,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.splashscreenfarmersapp.GetLocationClass;
 import com.example.splashscreenfarmersapp.R;
 import com.example.splashscreenfarmersapp.retrofit.GetNetworkConnection;
 import com.example.splashscreenfarmersapp.viewmodel.LoginLiveData;
 import com.example.splashscreenfarmersapp.viewmodel.SignupLiveData;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 
 public class LoginFragment extends Fragment {
@@ -96,6 +106,7 @@ public class LoginFragment extends Fragment {
                 CheckLogin();
             }
         });
+        GetLocationClass.getLocation(getActivity());
     }
 
     private void CheckLogin() {
@@ -104,13 +115,16 @@ public class LoginFragment extends Fragment {
             dialog.show();
             mLoginLiveData.setUserIdForEditUser(10);
         }
-        if(edt_username.getText().toString().trim().isEmpty()){
+        if (edt_username.getText().toString().trim().isEmpty()) {
             edt_username.setError("Please insert your username");
         }
-        if(edt_password.getText().toString().trim().isEmpty()){
+        if (edt_password.getText().toString().trim().isEmpty()) {
             edt_password.setError("Please insert your password");
         }
     }
+
+
+
 
 
 }
